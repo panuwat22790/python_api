@@ -1,0 +1,17 @@
+API key: c81e728d9d4c2f636f067f89cc14862c
+krt.service2023@gmail.com
+
+Header: {
+	�secret�: �e1df1585902df22b9f664380adc8ab34�,
+	�session�: {
+	 	 �username�: �krt.service2023@gmail.com�,
+	 	 �key�: � c81e728d9d4c2f636f067f89cc14862c�,
+	 	 �role�: �api�
+	}
+}
+
+
+https://api.tnjtek.com/v1/partner/
+https://api.tnjtek.com/v1/partner/franchise/<franchine_id> ?page=n
+https://api.tnjtek.com/v1/partner/station/<station_id> ?page=n
+https://api.tnjtek.com/v1/partner/salesDaily?date={yyyy-mm-dd}

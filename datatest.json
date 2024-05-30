@@ -1,0 +1,314 @@
+[
+    "Success to fetch data from API",
+    [
+      {
+        "id": 3,
+        "username": "bavornwass.faam@outlook.com",
+        "fname": "bavornwass",
+        "lname": "faam",
+        "gender": 1,
+        "phone": "",
+        "stations": [
+          {
+            "name": "Station01",
+            "detail": "Test Lao_QR",
+            "location": "@TNJ",
+            "devices": [
+              {
+                "num": "1",
+                "name": "@TNJ",
+                "detail": "เครื่องทดสอบ QR",
+                "mac": "c39b1c63",
+                "revenue": {
+                  "totalAmount": 0,
+                  "totalCash": 0,
+                  "totalQr": 0,
+                  "cycle": 0
+                }
+              }
+            ],
+            "revenue": {
+              "totalAmount": 0,
+              "totalCash": 0,
+              "totalQr": 0,
+              "cycle": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "username": "krt.service2023@gmail.com",
+        "fname": "KRT",
+        "lname": "HQ",
+        "gender": 1,
+        "phone": "",
+        "stations": [
+          {
+            "name": "KRT0001",
+            "detail": "HQ",
+            "location": "Phakhao",
+            "devices": [
+              {
+                "num": "1",
+                "name": "KRT0001-1",
+                "detail": "LG15KG",
+                "mac": "c39b1f1b",
+                "revenue": {
+                  "totalAmount": 26000,
+                  "totalCash": null,
+                  "totalQr": null,
+                  "cycle": 1
+                }
+              },
+              {
+                "num": "1",
+                "name": "KRT0001-2",
+                "detail": "LG15KG",
+                "mac": "22329d8f",
+                "revenue": {
+                  "totalAmount": 26000,
+                  "totalCash": 26000,
+                  "totalQr": 0,
+                  "cycle": 1
+                }
+              },
+              {
+                "num": "1",
+                "name": "KRT0001-3",
+                "detail": "LG15KG",
+                "mac": "b877f90f",
+                "revenue": {
+                  "totalAmount": 0,
+                  "totalCash": 0,
+                  "totalQr": 0,
+                  "cycle": 0
+                }
+              },
+              {
+                "num": "1",
+                "name": "KRT0001-4",
+                "detail": "LG15KG",
+                "mac": "22329e47",
+                "revenue": {
+                  "totalAmount": 0,
+                  "totalCash": 0,
+                  "totalQr": 0,
+                  "cycle": 0
+                }
+              }
+            ],
+            "revenue": {
+              "totalAmount": 52000,
+              "totalCash": null,
+              "totalQr": null,
+              "cycle": 2
+            }
+          },
+          {
+            "name": "KRT0002",
+            "detail": "Sky mart Phakao",
+            "location": "Phakao",
+            "devices": [
+              {
+                "num": "1",
+                "name": "KRT0002-1",
+                "detail": "LG15KG",
+                "mac": "22329ee7",
+                "revenue": {
+                  "totalAmount": 0,
+                  "totalCash": 0,
+                  "totalQr": 0,
+                  "cycle": 0
+                }
+              },
+              {
+                "num": "1",
+                "name": "KRT0002-2",
+                "detail": "LG15KG",
+                "mac": "2232a0af",
+                "revenue": {
+                  "totalAmount": 26000,
+                  "totalCash": null,
+                  "totalQr": null,
+                  "cycle": 1
+                }
+              },
+              {
+                "num": "1",
+                "name": "KRT0002-3",
+                "detail": "LG15KG",
+                "mac": "22329bfb",
+                "revenue": {
+                  "totalAmount": 26000,
+                  "totalCash": null,
+                  "totalQr": null,
+                  "cycle": 1
+                }
+              },
+              {
+                "num": "1",
+                "name": "KRT0002-4",
+                "detail": "LG15KG",
+                "mac": "22329feb",
+                "revenue": {
+                  "totalAmount": 26000,
+                  "totalCash": null,
+                  "totalQr": null,
+                  "cycle": 1
+                }
+              }
+            ],
+            "revenue": {
+              "totalAmount": 78000,
+              "totalCash": null,
+              "totalQr": null,
+              "cycle": 3
+            }
+          }
+        ]
+      },
+      {
+        "id": 15,
+        "username": "lounny866@gmail.com",
+        "fname": "Lounny",
+        "lname": "Douangchay",
+        "gender": 2,
+        "phone": "",
+        "stations": [
+          {
+            "name": "FCS003",
+            "detail": "BANK Academy",
+            "location": "Khamhoung",
+            "devices": [
+              {
+                "num": "1",
+                "name": "FCS003-1",
+                "detail": "LG15KG",
+                "mac": "22329ff7",
+                "revenue": {
+                  "totalAmount": 0,
+                  "totalCash": 0,
+                  "totalQr": 0,
+                  "cycle": 0
+                }
+              },
+              {
+                "num": "1",
+                "name": "FCS0003-2 ",
+                "detail": "LG15KG",
+                "mac": "22329f3b",
+                "revenue": {
+                  "totalAmount": 0,
+                  "totalCash": 0,
+                  "totalQr": 0,
+                  "cycle": 0
+                }
+              },
+              {
+                "num": "1",
+                "name": "FCS0003-3 ",
+                "detail": "LG15KG",
+                "mac": "2232a087",
+                "revenue": {
+                  "totalAmount": 0,
+                  "totalCash": 0,
+                  "totalQr": 0,
+                  "cycle": 0
+                }
+              },
+              {
+                "num": "1",
+                "name": "FCS003-4 ",
+                "detail": "LG15KG",
+                "mac": "22329f97",
+                "revenue": {
+                  "totalAmount": 26000,
+                  "totalCash": 0,
+                  "totalQr": 26000,
+                  "cycle": 1
+                }
+              }
+            ],
+            "revenue": {
+              "totalAmount": 26000,
+              "totalCash": 0,
+              "totalQr": 26000,
+              "cycle": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": 16,
+        "username": "dntkt88@gmail.com",
+        "fname": "Daranee",
+        "lname": "Noibantao",
+        "gender": 2,
+        "phone": "55229200",
+        "stations": [
+          {
+            "name": "FCS004",
+            "detail": "Chokthavy Khamsavath",
+            "location": "Khamsavath",
+            "devices": [
+              {
+                "num": "1",
+                "name": "FCS004-1",
+                "detail": "LG15KG.",
+                "mac": "b877f907",
+                "revenue": {
+                  "totalAmount": 0,
+                  "totalCash": 0,
+                  "totalQr": 0,
+                  "cycle": 0
+                }
+              },
+              {
+                "num": "1",
+                "name": "FCS004-2",
+                "detail": "LG15KG.",
+                "mac": "2232981b",
+                "revenue": {
+                  "totalAmount": 26000,
+                  "totalCash": null,
+                  "totalQr": null,
+                  "cycle": 1
+                }
+              },
+              {
+                "num": "1",
+                "name": "FCS004-3",
+                "detail": "LG15KG",
+                "mac": "22329ce3",
+                "revenue": {
+                  "totalAmount": 26000,
+                  "totalCash": null,
+                  "totalQr": null,
+                  "cycle": 1
+                }
+              },
+              {
+                "num": "1",
+                "name": "FCS004-4",
+                "detail": "LG15KG",
+                "mac": "c39b1c03",
+                "revenue": {
+                  "totalAmount": 26000,
+                  "totalCash": null,
+                  "totalQr": null,
+                  "cycle": 1
+                }
+              }
+            ],
+            "revenue": {
+              "totalAmount": 78000,
+              "totalCash": null,
+              "totalQr": null,
+              "cycle": 3
+            }
+          }
+        ]
+      }
+    ]
+  ]
