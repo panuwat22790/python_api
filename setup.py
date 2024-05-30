@@ -1,10 +1,22 @@
 import cx_Freeze
-
-executables = [cx_Freeze.Executable("hello.py")]
+import sys
+from pathlib import Path
+base = None
+if sys.platform == "win32":
+    base = "Console"
+Path = str(Path(__file__).parent.resolve())
+executables = [cx_Freeze.Executable("run.py",base=base)]
 
 cx_Freeze.setup(
-    name="HelloWorld",
-    version="0.1",
-    description="A simple Hello World script",
+    name="Wash_API",
+    options={
+        "build_exe": {
+            "packages": ["fastapi", "uvicorn", "os"],
+            "include_files": [
+
+                (f"{Path}\\SSL2024", "SSL2024")
+            ]
+        }
+    },
     executables=executables
 )

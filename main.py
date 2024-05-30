@@ -107,11 +107,3 @@ async def read_root():
         notify_to_chat(f""" Wash_API : \n status_code={response.status_code}, detail={str(e)} """)
         raise HTTPException(status_code=500, detail=str(e))
 # 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("main:app",
-                # host="wash.sbcservice.com",
-                port=8884,
-                ssl_keyfile = f"{Path}\\SSL2024\\key.pem",
-                ssl_certfile =f"{Path}\\SSL2024\\cert.pem",
-                reload=True)
