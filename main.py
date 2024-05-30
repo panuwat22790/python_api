@@ -110,7 +110,7 @@ async def read_root():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app",
-                host="wash.sbcservice.com",
+                # host="wash.sbcservice.com",
                 port=8884,
                 ssl_keyfile = f"{Path}\\SSL2024\\key.pem",
                 ssl_certfile =f"{Path}\\SSL2024\\cert.pem",
