@@ -10,7 +10,8 @@ password = "platinum"
 
 def connect(): return pyodbc.connect(f"Driver={'SQL Server'};Server={server};Database={database};Uid={username};Pwd={password}")
 
-"""TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT """ 
+"""TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT """
+
 def set_data_new(data):
     franchises_list     = data['franchises'] 
     stations_list       = [] 
@@ -42,7 +43,8 @@ def save_to_DB(franchises_list,date):
 
     return "Success to fetch data from API"
 
-"""TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT """ 
+"""TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT """
+
 #Duplicate
 def Duplicate_Franchise(franchise):
     try:
@@ -174,13 +176,6 @@ def insert_Device(s_id,device):
 
 #WashTransaction            
 def insert_Daily_WashTransaction(f_id,f_name,s_id,s_code,d_id,d_Washer_ID,revenue,date):
-    # if revenue["totalCash"] is None :
-    #     revenue["totalCash"] = 0
-    # if revenue["totalQr"] is None :
-    #     revenue["totalQr"] = 0
-    # if revenue["cycle"] is None :
-    #     revenue["cycle"] = 0
-
     if revenue["totalCash"] > 0 or revenue["totalQr"] > 0 or revenue["totalAmount"] > 0  :
        if revenue["cycle"] == 0:
             notify_to_chat(
