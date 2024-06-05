@@ -114,10 +114,8 @@ def insert_Franchise(franchise):
         with connect() as conn:
             cursor      = conn.cursor()          
             sql =f"""
-                 INSERT INTO Franchise 
-                     (Code, Name, SurName,TimeStempDate,isMaster,Tax)
-                 VALUES
-                     ('{franchise["id"]}','{franchise["fname"]}','{franchise["lname"]}', GETDATE(),'Y',0)
+                 INSERT INTO Franchise (Code, Name, SurName,TimeStempDate,isMaster,Tax,province,vat,Royalty_free)
+                 VALUES ('{franchise["id"]}','{franchise["fname"]}','{franchise["lname"]}', GETDATE(),'Y',0,1,8,10)
                  """
             cursor.execute(sql)  
         conn.commit()
