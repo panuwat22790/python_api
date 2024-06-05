@@ -7,4 +7,4 @@ def notify_to_chat(msg):
     header  = {'Content-Type':'application/x-www-form-urlencoded','Authorization':f'Bearer {token}'}
     data = {"message":msg,}
     req = requests.post(url,headers=header,data=data)
-    print(req.text)
+    # print(req.text)

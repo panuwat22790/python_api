@@ -10,7 +10,7 @@ password = "platinum"
 
 def connect(): return pyodbc.connect(f"Driver={'SQL Server'};Server={server};Database={database};Uid={username};Pwd={password}")
 
-"""TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT """
+""" TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT """
 
 def set_data_new(data):
     franchises_list     = data['franchises'] 
@@ -26,7 +26,9 @@ def set_data_new(data):
         print(data['date'], "== > OK.")
     else:
         return "Insert Fail "
-def save_to_DB(franchises_list,date): 
+def save_to_DB(franchises_list,date):
+    E01 = []
+    E02 = []         
     for franchises in franchises_list:
         f = Duplicate_Franchise(franchises)
         f_id = f[0]
@@ -39,11 +41,55 @@ def save_to_DB(franchises_list,date):
                 d = Duplicate_Device(s_id,device)
                 d_id = d[0]
                 d_Washer_ID = d[1]
-                insert_Daily_WashTransaction(f_id,f_name,s_id,s_code,d_id,d_Washer_ID,device["revenue"],date)
-
+                result =  insert_Daily_WashTransaction(f_id,f_name,s_id,s_code,d_id,d_Washer_ID,device["revenue"],date,E01,E02)
+    if len(result[0]) > 0 :
+        notify_to_chat(f"""
+Error Wash API (E01)
+Detail : valuse = 0 Exception
+Date : {date}
+Sum : {len(result[0])}
+{E01}""")
+        E01 =[]
+    if len(result[1]) > 0 :
+        notify_to_chat(f"""
+Error Wash API (E02)
+Detail : valuse = Null Exception
+Date : {date} 
+Sum : {len(result[1])}
+{E02}""")  
+        E02 =[]        
     return "Success to fetch data from API"
 
-"""TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT """
+""" TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT """
+#WashTransaction            
+def insert_Daily_WashTransaction(f_id,f_name,s_id,s_code,d_id,d_Washer_ID,revenue,date,E01,E02):
+    if revenue["totalCash"] > 0 or revenue["totalQr"] > 0 or revenue["totalAmount"] > 0  :
+       if revenue["cycle"] == 0:
+           E01.append(f"Franchise ID : {f_id} {f_name} Station ID : {s_id} {s_code} Device ID : {d_id} {d_Washer_ID}")
+            
+    if revenue["totalCash"] is None or revenue["totalQr"] is None or revenue["cycle"] is None:
+        E02.append(f"Franchise ID : {f_id} {f_name} Station ID : {s_id} {s_code} Device ID : {d_id} {d_Washer_ID}")
+
+    try:
+        with connect() as conn:
+            cursor      = conn.cursor()           
+            sql =f"""
+                    INSERT INTO WashTransaction 
+                        (LogDate,Franchise,Station,WashMachine,AmountCoin_Baht,AmountQRCode_kip,Total_cycle,Date)
+                    VALUES 
+                        (GETDATE(),{f_id},{s_id},{d_id},{revenue["totalCash"]},{revenue["totalQr"]},{revenue["cycle"]},'{date}')
+                 """
+            cursor.execute(sql)  
+        conn.commit()
+        return E01,E02
+    except DatabaseError as e:
+        conn.rollback()
+        return JSONResponse(content={"DatabaseError": str(e)})
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)})
+    finally:
+        if conn is not None:
+            conn.close()
 
 #Duplicate
 def Duplicate_Franchise(franchise):
@@ -107,15 +153,15 @@ def Duplicate_Device(s_id,device):
     finally:
         if conn is not None:
             conn.close()   
-              
+
 #insert_data
 def insert_Franchise(franchise):
     try:
         with connect() as conn:
             cursor      = conn.cursor()          
             sql =f"""
-                 INSERT INTO Franchise (Code, Name, SurName,TimeStempDate,isMaster,Tax,province,vat,Royalty_free)
-                 VALUES ('{franchise["id"]}','{franchise["fname"]}','{franchise["lname"]}', GETDATE(),'Y',0,1,8,10)
+                 INSERT INTO Franchise (Code, Name, SurName,TimeStempDate,isMaster,Tax,province,vat,Royalty_free,RegisterDate)
+                 VALUES ('{franchise["id"]}','{franchise["fname"]}','{franchise["lname"]}', GETDATE(),'Y',0,1,8,10, GETDATE())
                  """
             cursor.execute(sql)  
         conn.commit()
@@ -171,48 +217,4 @@ def insert_Device(s_id,device):
     finally:
         if conn is not None:
             conn.close()
-
-#WashTransaction            
-def insert_Daily_WashTransaction(f_id,f_name,s_id,s_code,d_id,d_Washer_ID,revenue,date):
-    if revenue["totalCash"] > 0 or revenue["totalQr"] > 0 or revenue["totalAmount"] > 0  :
-       if revenue["cycle"] == 0:
-            notify_to_chat(
-                f""" ตรวจพบข้อผิดพลาด Wash API (E01) \n
-                Detail : valuse = 0 Exception
-                Date : {date} \n
-                franchise ID : {f_id} {f_name}\n
-                station ID : {s_id} {s_code}\n
-                device ID : {d_id} {d_Washer_ID}\n  """
-
-       )
-    if revenue["totalCash"] is None or revenue["totalQr"] is None or revenue["cycle"] is None:
-       notify_to_chat(
-            f""" ตรวจพบข้อผิดพลาด Wash API (E02) \n
-            Detail : Null Exception
-            Date : {date} \n
-            franchise ID : {f_id} {f_name}\n
-            station ID : {s_id} {s_code}\n
-            device ID : {d_id} {d_Washer_ID}\n  """
-
-       )
-
-
-    try:
-        with connect() as conn:
-            cursor      = conn.cursor()           
-            sql =f"""
-                    INSERT INTO WashTransaction 
-                        (LogDate,Franchise,Station,WashMachine,AmountCoin_Baht,AmountQRCode_kip,Total_cycle,Date)
-                    VALUES 
-                        (GETDATE(),{f_id},{s_id},{d_id},{revenue["totalCash"]},{revenue["totalQr"]},{revenue["cycle"]},'{date}')
-                 """
-            cursor.execute(sql)  
-        conn.commit()
-    except DatabaseError as e:
-        conn.rollback()
-        return JSONResponse(content={"DatabaseError": str(e)})
-    except Exception as e:
-        return JSONResponse(content={"error": str(e)})
-    finally:
-        if conn is not None:
-            conn.close()
+   
