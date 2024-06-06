@@ -12,8 +12,7 @@ cx_Freeze.setup(
     options={
         "build_exe": {
             "packages": ["fastapi", "uvicorn", "os"],
-            "include_files": [(f"{Path}\\SSL2024", "SSL2024")
-            ]
+            "include_files": [(f"{Path}\\SSL2024", "SSL2024")]
         }
     },
     executables=executables
