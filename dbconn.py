@@ -37,42 +37,47 @@ def save_to_DB(franchises_list,date):
             s = Duplicate_Station(f_id,station)
             s_id = s[0]
             s_code = s[1]
+            E1_device,E2_device = '',''
             for device in station['devices']:
                 d = Duplicate_Device(s_id,device)
                 d_id = d[0]
                 d_Washer_ID = d[1]
-                E_device_1,E_device_2="\n","\n"
-                result =  insert_Daily_WashTransaction(f_id,f_name,s_id,s_code,d_id,d_Washer_ID,device["revenue"],date,E_device_1,E_device_2)
-            if len(result[0]) > 3 :
-                E01 = E01 + (f"Franchise ID : {f_id} {f_name} Station ID : {s_id} {s_code} Device ID : {result[0]} ,")+"\n"
-            if len(result[1]) > 3 :
-                E02 = E02 + (f"Franchise ID : {f_id} {f_name} Station ID : {s_id} {s_code} Device ID : {result[1]} ,")+"\n"
+                result =  insert_Daily_WashTransaction(f_id,f_name,s_id,s_code,d_id,d_Washer_ID,device["revenue"],date)
+                if len(result[0]) > 1 :
+                    E1_device += f"{result[0]},"
+                if len(result[1]) > 1 :
+                    E2_device += f"{result[1]},"
+            if len(E1_device) > 1 :
+                E01 += (f"Franchise ID : {f_id} {f_name} Station ID : {s_id} {s_code} Device ID : {E1_device} ,")+"\n"
+            if len(E2_device) > 1 :
+                E02 += (f"Franchise ID : {f_id} {f_name} Station ID : {s_id} {s_code} Device ID : {E2_device} ,")+"\n"
+
     if len(E01) > 3 :
         notify_to_chat(f"""
 Error Wash API (E01)
 Detail : valuse = 0 Exception
 Date : {date}
 {E01}""")
-        E01 =[]
+        E01 =""
     if len(E02) > 3 :
         notify_to_chat(f"""
 Error Wash API (E02)
 Detail : valuse = Null Exception
 Date : {date} 
 {E02}""")  
-        E02 =[]        
+        E02 =""       
     return "Success to fetch data from API"
 
 """ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT """
 #WashTransaction            
-def insert_Daily_WashTransaction(f_id,f_name,s_id,s_code,d_id,d_Washer_ID,revenue,date, E1,E2):
-    
+def insert_Daily_WashTransaction(f_id,f_name,s_id,s_code,d_id,d_Washer_ID,revenue,date):
+    E1,E2 = "",""
     if revenue["totalCash"] > 0 or revenue["totalQr"] > 0 or revenue["totalAmount"] > 0  :
        if revenue["cycle"] == 0:
-           E1 = E1+(f",[{d_id} {d_Washer_ID}] ")
+           E1 = (f",[{d_id} {d_Washer_ID}] ")
             
     if revenue["totalCash"] is None or revenue["totalQr"] is None or revenue["cycle"] is None:
-        E2 = E2+(f",[{d_id} {d_Washer_ID}] ")
+        E2 = (f",[{d_id} {d_Washer_ID}] ")
 
     try:
         with connect() as conn:
@@ -83,9 +88,11 @@ def insert_Daily_WashTransaction(f_id,f_name,s_id,s_code,d_id,d_Washer_ID,revenu
                     VALUES 
                         (GETDATE(),{f_id},{s_id},{d_id},{revenue["totalCash"]},{revenue["totalQr"]},{revenue["cycle"]},'{date}')
                  """
+            # sql = ''
             cursor.execute(sql)  
         conn.commit()
-        return E1,E2
+        return E1,E2   #check Error
+        
     except DatabaseError as e:
         conn.rollback()
         return JSONResponse(content={"DatabaseError": str(e)})

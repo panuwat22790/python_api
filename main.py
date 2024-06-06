@@ -84,6 +84,30 @@ async def read_root():
         notify_to_chat(f""" Wash_API : \n status_code={response.status_code}, detail={str(e)} """)
         raise HTTPException(status_code=500, detail=str(e))
     return 200 ,"Success all data "
+@app.get("/api/wash_project/salesDaily/{date}")
+async def read_root(date:str):
+    print(date)
+    try:
+        url = f"https://api.tnjtek.com/v1/partner/salesDaily?date={date}"
+        response = requests.get(url,headers=headers)
+        response.raise_for_status()
+        if response.status_code == 200:
+            data = response.json()
+            set_data_new(data)
+            return {"data":data}
+        else:
+            return "Failed to fetch data from API"  # ร้องขอไม่สำเร็จ
+        
+    except requests.exceptions.ConnectTimeout:
+        notify_to_chat(""" Wash_API : \n status_code=504, detail="Connection to the external API timed out." """)
+        raise HTTPException(status_code=504, detail="Connection to the external API timed out.")
+    except requests.exceptions.HTTPError as e:
+        notify_to_chat(f""" Wash_API : \n status_code={response.status_code}, detail={str(e)} """)
+        raise HTTPException(status_code=response.status_code, detail=str(e))
+    except requests.exceptions.RequestException as e:
+        notify_to_chat(f""" Wash_API : \n status_code={response.status_code}, detail={str(e)} """)
+        raise HTTPException(status_code=500, detail=str(e))
+    return 200 ,"Success all data "
 
 @app.get("/api/wash_project/test")
 async def read_root():
