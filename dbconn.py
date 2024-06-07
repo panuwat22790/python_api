@@ -27,8 +27,8 @@ def set_data_new(data):
     else:
         return "Insert Fail "
 def save_to_DB(franchises_list,date):
-    E01 = ""
-    E02 = ""   
+    E01,E02 = "","" 
+    sum1,sum2= 0 ,0 
     for franchises in franchises_list:
         f = Duplicate_Franchise(franchises)
         f_id = f[0]
@@ -44,19 +44,22 @@ def save_to_DB(franchises_list,date):
                 d_Washer_ID = d[1]
                 result =  insert_Daily_WashTransaction(f_id,f_name,s_id,s_code,d_id,d_Washer_ID,device["revenue"],date)
                 if len(result[0]) > 1 :
-                    E1_device += f"{result[0]},"
+                    E1_device += f",{result[0]}"
+                    sum1 += 1
                 if len(result[1]) > 1 :
-                    E2_device += f"{result[1]},"
+                    E2_device += f",{result[1]}"
+                    sum2 += 1
             if len(E1_device) > 1 :
-                E01 += (f"Franchise ID : {f_id} {f_name} Station ID : {s_id} {s_code} Device ID : {E1_device} ,")+"\n"
+                E01 += (f"[Franchise ID : {f_id} {f_name} Station ID : {s_id} {s_code} Device ID : {E1_device} ],")+"\n"
             if len(E2_device) > 1 :
-                E02 += (f"Franchise ID : {f_id} {f_name} Station ID : {s_id} {s_code} Device ID : {E2_device} ,")+"\n"
+                E02 += (f"[Franchise ID : {f_id} {f_name} Station ID : {s_id} {s_code} Device ID : {E2_device} ],")+"\n"
 
     if len(E01) > 3 :
         notify_to_chat(f"""
 Error Wash API (E01)
 Detail : valuse = 0 Exception
 Date : {date}
+sum : {sum1}
 {E01}""")
         E01 =""
     if len(E02) > 3 :
@@ -64,6 +67,7 @@ Date : {date}
 Error Wash API (E02)
 Detail : valuse = Null Exception
 Date : {date} 
+sum : {sum2}
 {E02}""")  
         E02 =""       
     return "Success to fetch data from API"
@@ -71,14 +75,15 @@ Date : {date}
 """ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT """
 #WashTransaction            
 def insert_Daily_WashTransaction(f_id,f_name,s_id,s_code,d_id,d_Washer_ID,revenue,date):
+    
     E1,E2 = "",""
     if revenue["totalCash"] > 0 or revenue["totalQr"] > 0 or revenue["totalAmount"] > 0  :
        if revenue["cycle"] == 0:
-           E1 = (f",[{d_id} {d_Washer_ID}] ")
+           E1 = (f"{d_id} {d_Washer_ID} ")
             
     if revenue["totalCash"] is None or revenue["totalQr"] is None or revenue["cycle"] is None:
-        E2 = (f",[{d_id} {d_Washer_ID}] ")
-
+        E2 = (f"{d_id} {d_Washer_ID} ")
+    
     try:
         with connect() as conn:
             cursor      = conn.cursor()           
